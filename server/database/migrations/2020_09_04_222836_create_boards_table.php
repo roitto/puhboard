@@ -19,6 +19,7 @@ class CreateBoardsTable extends Migration
             $table->string('url')->unique();
             $table->string('url_short')->unique();
             $table->string('description')->nullable();
+            $table->string('icon')->nullable();
             $table->boolean('is_hidden')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at');

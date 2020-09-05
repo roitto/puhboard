@@ -20,6 +20,10 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('content');
+            $table->string('unique_identifier');
+            $table->string('user_ip');
+            $table->boolean('show_name')->default(false);
+            $table->boolean('show_filename')->default(false);
             $table->boolean('is_shadow_banned')->default(false);
             $table->timestamp('bumped_at')->nullable();
             $table->timestamps();
