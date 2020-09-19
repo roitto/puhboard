@@ -31,6 +31,11 @@ class CreateUserTest extends TestCase
                 'settings',
             ],
         ]]);
+
+        $this->seeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'Foo@example.test',
+        ]);
     }
 
     /**
@@ -58,6 +63,11 @@ class CreateUserTest extends TestCase
                 'name',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => '',
+            'email' => 'Foo@example.test',
+        ]);
     }
 
     /**
@@ -117,6 +127,11 @@ class CreateUserTest extends TestCase
                 'name',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'A',
+            'email' => 'Foo@example.test',
+        ]);
     }
 
     /**
@@ -142,6 +157,11 @@ class CreateUserTest extends TestCase
                 'settings',
             ],
         ]]);
+
+        $this->seeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => null,
+        ]);
     }
 
     /**
@@ -169,6 +189,11 @@ class CreateUserTest extends TestCase
                 'email',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'Definetly_no_an_email',
+        ]);
     }
 
     /**
@@ -227,6 +252,11 @@ class CreateUserTest extends TestCase
                 'password',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'FooBar@example.com',
+        ]);
     }
 
     /**
@@ -254,6 +284,11 @@ class CreateUserTest extends TestCase
                 'password',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'FooBar@example.com',
+        ]);
     }
 
     /**
@@ -281,6 +316,11 @@ class CreateUserTest extends TestCase
                 'password_repeat',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'FooBar@example.com',
+        ]);
     }
 
     /**
@@ -308,5 +348,10 @@ class CreateUserTest extends TestCase
                 'password_repeat',
             ],
         ]]);
+
+        $this->notSeeInDatabase('users', [
+            'name' => 'FooBar',
+            'email' => 'FooBar@example.com',
+        ]);
     }
 }

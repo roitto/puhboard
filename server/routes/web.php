@@ -15,11 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-/*
- * Authorization routes
- */
 $router->post('auth/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
 $router->post('user', ['as' => 'user.create', 'uses' => 'UserController@create']);
+
+$router->get('boards', ['as' => 'boards.index', 'uses' => 'BoardController@index']);
 
 $router->group(['middleware' => 'auth:api'], function () use ($router) {
     $router->post('auth/logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);

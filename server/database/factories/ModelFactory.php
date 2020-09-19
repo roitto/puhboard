@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Board;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -20,5 +21,14 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
+    ];
+});
+
+$factory->define(Board::class, function (Faker $faker) {
+    return [
+        'name' => $faker->unique()->word,
+        'url' => $faker->unique()->word,
+        'url_short' => $faker->unique()->randomletter,
+        'description' => $faker->text(rand(10, 100)),
     ];
 });
