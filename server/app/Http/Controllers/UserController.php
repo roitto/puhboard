@@ -11,5 +11,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        $data = $this->validate(request(), [
+            'name' => 'required|string|unique:users',
+            'email' => 'sometimes|email|unique:users',
+            'password' => 'required|string',
+            'password_second' => 'required|same_as:password',
+        ]);
     }
 }
