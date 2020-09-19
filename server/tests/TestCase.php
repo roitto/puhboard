@@ -2,17 +2,29 @@
 
 namespace Tests;
 
-use Drfraker\SnipeMigrations\Snipe;
 use Drfraker\SnipeMigrations\SnipeMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\TestCase as BaseTestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 abstract class TestCase extends BaseTestCase
 {
     use DatabaseMigrations, SnipeMigrations, DatabaseTransactions;
+
+    /**
+     * Set an token header for the user.
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable
+     * @return array
+     */
+    public function tokenHeaderForUser(Authenticatable $user)
+    {
+        return [
+            'Authorization' => 'Bearer '.JWTAuth::fromUser($user),
+        ];
+    }
 
     /**
      * Creates the application.
