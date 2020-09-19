@@ -50,7 +50,7 @@ class AuthorizationTest extends TestCase
             'name' => 'FooBar',
             'password' => 'WRONG_CREDS',
         ])
-        ->seeStatusCode(200)
+        ->seeStatusCode(401)
         ->seeJson([
             'id' => (string) '401',
             'status' => (string) '401',

@@ -9,8 +9,6 @@ class AuthTokenResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * https://jsonapi.org/format/#error-objects
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
