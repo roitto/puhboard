@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthTokenResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +17,12 @@ class AuthTokenResource extends JsonResource
         JsonResource::wrap('data');
 
         return (object) [
-            'id' => (string) '1000',
-            'type' => (string) 'authorization',
+            'id' => (string) $this->uuid,
+            'type' => (string) 'user',
             'attributes' => (object) [
-                'token' => (string) $this->token,
-                'expires_in' => (string) $this->expires_in,
+                'name' => (string) $this->name,
+                'email' => isset($this->email) ? (string) $this->email : null,
+                'settings' => isset($this->settings) ? (object) $this->settings : null,
             ],
         ];
     }
