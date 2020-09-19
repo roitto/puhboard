@@ -4,9 +4,6 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthorizationTest extends TestCase
 {
@@ -34,8 +31,90 @@ class AuthorizationTest extends TestCase
             'type',
             'attributes' => [
                 'token',
-                'expires_in'
-            ]
+                'expires_in',
+            ],
+        ]]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_fails_with_wrong_credentials()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => 'WRONG_CREDS',
+        ])
+        ->seeStatusCode(200)
+        ->seeJson([
+            'id' => (string) '401',
+            'status' => (string) '401',
+            'code' => (string) 'unauthorized',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function name_is_required()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => '',
+            'password' => 'Testing',
+        ])
+        ->seeStatusCode(422)
+        ->seeJson([
+            'id' => (string) '422',
+            'status' => (string) '422',
+            'code' => (string) 'validation',
+        ])
+        ->seeJsonStructure(['errors' => [
+            'id',
+            'status',
+            'code',
+            'attributes' => [
+                'name',
+            ],
+        ]]);
+    }
+
+    /**
+     * @test
+     */
+    public function password_is_required()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => '',
+        ])
+        ->seeStatusCode(422)
+        ->seeJson([
+            'id' => (string) '422',
+            'status' => (string) '422',
+            'code' => (string) 'validation',
+        ])
+        ->seeJsonStructure(['errors' => [
+            'id',
+            'status',
+            'code',
+            'attributes' => [
+                'password',
+            ],
         ]]);
     }
 }

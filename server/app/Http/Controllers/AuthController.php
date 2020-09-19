@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Http\Resources\ErrorResource;
 use App\Http\Resources\AuthTokenResource;
+use App\Http\Resources\ErrorResource;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -24,7 +24,7 @@ class AuthController extends Controller
             return new ErrorResource((object) [
                 'id' => '401',
                 'status' => '401',
-                'code' => 'UNAUTHORIZED',
+                'code' => 'unauthorized',
             ]);
         }
 
