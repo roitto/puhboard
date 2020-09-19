@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use Tests\TestCase;
 
-class AuthorizationTest extends TestCase
+class AuthorizationLoginTest extends TestCase
 {
     /**
      * @test

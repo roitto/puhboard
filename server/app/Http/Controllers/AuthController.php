@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AuthTokenResource;
 use App\Http\Resources\ErrorResource;
-use App\User;
 
 class AuthController extends Controller
 {
     /**
      * Auth login.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login()
     {
@@ -46,24 +45,12 @@ class AuthController extends Controller
     /**
      * Auth refresh token.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
     {
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
+        return new AuthTokenResource((object) [
+            'token' => auth()->refresh(),
             'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
