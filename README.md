@@ -1,2 +1,2 @@
 # puhboard
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/roitto/puhboard/Server%20phpunit)](https://github.com/roitto/puhboard/actions)
+[![phpunit](https://github.com/roitto/puhboard/workflows/Server%20phpunit/badge.svg)](https://github.com/roitto/puhboard/actions)
