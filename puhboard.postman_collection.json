@@ -11,9 +11,28 @@
 			"item": [
 				{
 					"name": "Login - /auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "37ccf339-610a-4acb-9f5f-3454402d1066",
+								"exec": [
+									"pm.collectionVariables.set(\"token\", pm.response.json().data.attributes.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"name\": \"test\",\n\"password\": \"password\"\n}",
@@ -36,6 +55,69 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Refresh - /auth/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f60b29d-b7b4-4e0d-b1c2-630deaf868e6",
+								"exec": [
+									"pm.collectionVariables.set(\"token\", pm.response.json().data.attributes.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -47,10 +129,16 @@
 					"name": "Create user - /user/",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"name\": \"test332322\",\n\"password\": \"password\",\n\"password_repeat\": \"password\",\n\"email\": \"test233233@test.com\"\n}",
+							"raw": "{\n\"name\": \"test\",\n\"password\": \"password\",\n\"password_repeat\": \"password\",\n\"email\": \"tes@example.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,9 +185,14 @@
 	],
 	"variable": [
 		{
-			"id": "14b25d03-078e-436c-a74a-12e264ca8d29",
+			"id": "6f827dee-6cfb-4cf0-ae2d-7ba46191ef24",
 			"key": "base_url",
 			"value": "http://puhboard.test"
+		},
+		{
+			"id": "bd93272e-7002-484d-bd50-35eafdc65c28",
+			"key": "token",
+			"value": "foo"
 		}
 	],
 	"protocolProfileBehavior": {}
