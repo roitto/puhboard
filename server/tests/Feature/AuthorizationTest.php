@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -14,22 +15,27 @@ class AuthorizationTest extends TestCase
      */
     public function it_logs_in()
     {
-        $user = factory(User::class)->create([
+        factory(User::class)->create([
             'name' => 'FooBar',
             'password' => 'Testing',
         ]);
 
-        $this->json('post', route('auth.login'), [
-            'name' => $user->name,
-            'password' => $user->password,
-        ]);
-
-        $this->response->assertStatus(200);
-
-        $this->seeJson(
-            [
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ])
+        ->seeStatusCode(200)
+        ->seeJson([
             'id' => (string) '1000',
             'type' => (string) 'authorization',
-            ]);
+        ])
+        ->seeJsonStructure(['data' => [
+            'id',
+            'type',
+            'attributes' => [
+                'token',
+                'expires_in'
+            ]
+        ]]);
     }
 }
