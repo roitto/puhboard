@@ -21,11 +21,11 @@ class AuthController extends Controller
         ]);
 
         if (! $token = auth()->attempt($data)) {
-            return new ErrorResource((object) [
+            return (new ErrorResource((object) [
                 'id' => '401',
                 'status' => '401',
                 'code' => 'unauthorized',
-            ]);
+            ]))->response()->setStatusCode(401);
         }
 
         return new AuthTokenResource((object) [
