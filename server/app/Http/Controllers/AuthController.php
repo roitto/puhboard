@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AuthTokenResource;
 use App\Http\Resources\ErrorResource;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -19,16 +20,13 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        dd(auth()->attempt($data));
         if (! $token = auth()->attempt($data)) {
             return new ErrorResource((object) [
                 'id' => '401',
                 'status' => '401',
-                'code' => 'UNAUTHORIZED',
+                'code' => 'unauthorized',
             ]);
         }
-
-        return $this->respondWithToken($token);
 
         return new AuthTokenResource((object) [
             'token' => $token,

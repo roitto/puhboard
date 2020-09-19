@@ -4,11 +4,11 @@ namespace Tests;
 
 use Drfraker\SnipeMigrations\Snipe;
 use Drfraker\SnipeMigrations\SnipeMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Lumen\Testing\TestCase as BaseTestCase;
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
 
 abstract class TestCase extends BaseTestCase
 {

@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthorizationTest extends TestCase
 {
@@ -14,22 +12,109 @@ class AuthorizationTest extends TestCase
      */
     public function it_logs_in()
     {
-        $user = factory(User::class)->create([
+        factory(User::class)->create([
             'name' => 'FooBar',
             'password' => 'Testing',
         ]);
 
-        $this->json('post', route('auth.login'), [
-            'name' => $user->name,
-            'password' => $user->password,
-        ]);
-
-        $this->response->assertStatus(200);
-
-        $this->seeJson(
-            [
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ])
+        ->seeStatusCode(200)
+        ->seeJson([
             'id' => (string) '1000',
             'type' => (string) 'authorization',
-            ]);
+        ])
+        ->seeJsonStructure(['data' => [
+            'id',
+            'type',
+            'attributes' => [
+                'token',
+                'expires_in',
+            ],
+        ]]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_fails_with_wrong_credentials()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => 'WRONG_CREDS',
+        ])
+        ->seeStatusCode(200)
+        ->seeJson([
+            'id' => (string) '401',
+            'status' => (string) '401',
+            'code' => (string) 'unauthorized',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function name_is_required()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => '',
+            'password' => 'Testing',
+        ])
+        ->seeStatusCode(422)
+        ->seeJson([
+            'id' => (string) '422',
+            'status' => (string) '422',
+            'code' => (string) 'validation',
+        ])
+        ->seeJsonStructure(['errors' => [
+            'id',
+            'status',
+            'code',
+            'attributes' => [
+                'name',
+            ],
+        ]]);
+    }
+
+    /**
+     * @test
+     */
+    public function password_is_required()
+    {
+        factory(User::class)->create([
+            'name' => 'FooBar',
+            'password' => 'Testing',
+        ]);
+
+        $this->post(route('auth.login'), [
+            'name' => 'FooBar',
+            'password' => '',
+        ])
+        ->seeStatusCode(422)
+        ->seeJson([
+            'id' => (string) '422',
+            'status' => (string) '422',
+            'code' => (string) 'validation',
+        ])
+        ->seeJsonStructure(['errors' => [
+            'id',
+            'status',
+            'code',
+            'attributes' => [
+                'password',
+            ],
+        ]]);
     }
 }
