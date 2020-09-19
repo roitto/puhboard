@@ -36,10 +36,13 @@ class AuthController extends Controller
     /**
      * Auth logout.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {
+        auth()->logout();
+
+        return response()->json([])->setStatusCode(204);
     }
 
     /**
