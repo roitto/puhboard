@@ -1,4 +1,4 @@
-name: Server phpunit
+name: phpunit
 
 defaults:
   run:
