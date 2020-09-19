@@ -1,4 +1,8 @@
-name: Laravel
+name: Server phpunit
+
+defaults:
+  run:
+    working-directory: server
 
 
 on:
