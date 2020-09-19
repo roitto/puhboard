@@ -16,13 +16,14 @@ class AuthTokenResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->resource = (object) [
+        JsonResource::wrap('data');
+
+        return (object) [
             'id' => (string) '1000',
             'type' => (string) 'authorization',
             'attributes' => (object) [
-                'access_token' => (string) $this->token,
-                'token_type' => (string) 'bearer',
-                'access_token' => (string) $this->token,
+                'token' => (string) $this->token,
+                'expires_in' => (string) $this->expires_in,
             ],
         ];
     }
