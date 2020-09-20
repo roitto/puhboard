@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\User;
 
-class UserController extends Controller
+class CreateUsersController extends Controller
 {
     /**
      * Store a new resource to the storage.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function __invoke()
     {
         $data = $this->validate(request(), [
             'name' => 'required|string|unique:users|min:2',

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Board;
 use App\Http\Resources\PostResource;
-use App\Http\Resources\BoardResource;
 
-class BoardPostsController extends Controller
+class ListBoardPostsController extends Controller
 {
     /**
-     * List resources from the storage.
+     * List board posts from the storage.
      *
      * @return \Illuminate\Http\JsonResponse
      */

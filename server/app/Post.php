@@ -26,6 +26,15 @@ class Post extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'bumped_at',
+    ];
+
+    /**
      * Get the route for the given board.
      *
      * @return string
@@ -33,5 +42,13 @@ class Post extends Model
     public function getRouteAttribute(): string
     {
         return route('posts.show', $this->id);
+    }
+
+    /**
+     * Has many child posts.
+     */
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_post_id');
     }
 }

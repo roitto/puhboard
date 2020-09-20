@@ -26,7 +26,6 @@ class BoardResource extends JsonResource
                 'url_short' => (string) $this->url_short,
                 'description' => (string) $this->description,
                 'icon' => (string) $this->icon,
-                'posts' => $this->whenLoaded('posts') ? PostResource::collection($this->posts) : null, 
             ],
         ];
     }

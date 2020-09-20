@@ -14,7 +14,7 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        return (object) [
+        $response = (object) [
             'id' => (string) $this->id,
             'type' => (string) 'post',
             'attributes' => (object) [
@@ -24,5 +24,11 @@ class PostResource extends JsonResource
                 'bumped_at' => (string) $this->bumped_at,
             ],
         ];
+
+        if ($this->relationLoaded('children')) {
+            $response->attributes->children = PostResource::collection($this->children);
+        }
+
+        return $response;
     }
 }
