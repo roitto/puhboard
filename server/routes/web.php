@@ -19,6 +19,10 @@ $router->post('auth/login', ['as' => 'auth.login', 'uses' => 'AuthController@log
 $router->post('user', ['as' => 'user.create', 'uses' => 'UserController@create']);
 
 $router->get('boards', ['as' => 'boards.index', 'uses' => 'BoardController@index']);
+$router->get('boards/{boardUrl}', ['as' => 'board-posts.index', 'uses' => 'BoardPostsController']);
+
+$router->get('boards/{boardUrl}/{post}', ['as' => 'posts.index', 'uses' => 'PostController@index']);
+$router->get('posts/{post}', ['as' => 'posts.show', 'uses' => 'PostController@show']);
 
 $router->group(['middleware' => 'auth:api'], function () use ($router) {
     $router->post('auth/logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);

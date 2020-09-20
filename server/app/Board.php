@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Post;
 use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
@@ -23,5 +24,13 @@ class Board extends Model
     public function getRouteAttribute(): string
     {
         return route('board.show', $this->url);
+    }
+
+    /**
+     * Has many posts.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
