@@ -26,7 +26,7 @@ class PostResource extends JsonResource
         ];
 
         if ($this->relationLoaded('children')) {
-            $response->attributes->children = PostResource::collection($this->children);
+            $response->attributes->children = self::collection($this->children);
         }
 
         return $response;

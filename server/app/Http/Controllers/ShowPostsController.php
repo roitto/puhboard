@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use App\Http\Resources\PostResource;
+use App\Post;
 
 class ShowPostsController extends Controller
 {
