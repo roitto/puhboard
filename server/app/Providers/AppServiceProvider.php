@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Board;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

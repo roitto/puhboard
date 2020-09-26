@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\PostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BoardResource extends JsonResource

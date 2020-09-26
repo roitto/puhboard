@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Board;
+use App\Post;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -31,4 +32,30 @@ $factory->define(Board::class, function (Faker $faker) {
         'url_short' => $faker->unique()->randomletter,
         'description' => $faker->text(rand(10, 100)),
     ];
+});
+
+$factory->define(Post::class, function (Faker $faker) {
+    return [
+        'board_id' => factory(Board::class)->create(),
+        'user_id' => factory(User::class)->create(),
+        'parent_post_id' => null,
+        'title' => $faker->text(rand(10, 50)),
+        'content' => $faker->text(rand(10, 100)),
+        'unique_identifier' => rand(1000, 9999),
+        'user_ip' => $faker->ipv4,
+    ];
+});
+
+$factory->afterCreatingState(Post::class, 'with_children', function ($post, $faker) {
+    foreach (range(0, rand(1, 5)) as $i) {
+        $post->children()->create([
+            'board_id' => $post->board_id,
+            'user_id' => factory(User::class)->create()->id,
+            'parent_post_id' => $post->id,
+            'title' => $faker->text(rand(10, 50)),
+            'content' => $faker->text(rand(10, 100)),
+            'unique_identifier' => rand(1000, 9999),
+            'user_ip' => $faker->ipv4,
+        ]);
+    }
 });

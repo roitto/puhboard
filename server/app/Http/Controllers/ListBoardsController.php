@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Board;
 use App\Http\Resources\BoardResource;
 
-class BoardController extends Controller
+class ListBoardsController extends Controller
 {
     /**
-     * List resources from the storage.
+     * List boards from the storage.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function __invoke()
     {
         return BoardResource::collection(Board::where('is_hidden', false)->get());
     }
