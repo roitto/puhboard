@@ -14,6 +14,8 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
+        JsonResource::wrap('data');
+
         $response = (object) [
             'id' => (string) $this->id,
             'type' => (string) 'post',
