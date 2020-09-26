@@ -16,7 +16,7 @@ class ShowPostsTest extends TestCase
     {
         $post = factory(Post::class)->states('with_children')->create();
 
-        $this->json('get', 'posts/' . $post->id)
+        $this->json('get', 'posts/'.$post->id)
             ->seeStatusCode(200)
             ->seeJsonStructure([
                 'data' => [
