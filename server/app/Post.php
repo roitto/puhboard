@@ -15,14 +15,15 @@ class Post extends Model
         'board_id',
         'parent_post_id',
         'media_id',
-        'title', 
+        'user_id',
+        'title',
         'content',
         'unique_identifier',
         'user_ip',
         'show_name',
         'show_filename',
         'is_shadow_banned',
-        'bumped_at'
+        'bumped_at',
     ];
 
     /**
